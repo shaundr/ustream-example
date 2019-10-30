@@ -182,6 +182,8 @@ const UstreamEmbed = (function () {
               return;
             }
 
+            console.log('data', d);
+
             if (d.sstream) {
               onSStreamMsg(e);
               return;
@@ -200,6 +202,12 @@ const UstreamEmbed = (function () {
               dispatchEvent(events, 'offline');
               return;
             }
+
+            // potential offline event hack?
+            // if (Object.keys(d.event).length === 0) {
+            //   dispatchEvent(events, 'offline');
+            //   return;
+            // }
 
             if (!!d.event && !d.event.ready) {
               if (objectKeys) {
