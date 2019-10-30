@@ -18,19 +18,23 @@
   <script>
     var viewer = document.getElementById('UstreamFrame')
     var v = UstreamEmbed(viewer)
-    v.addListener('live', function() { console.log('live') })
+    v.addListener('live', function() {
+      setTimeout(function() {
+        v.callMethod('play');
+      }, 1000)
+    })
     v.addListener('offline', function() { console.log('offline') })
     v.addListener('finished', function() { console.log('finished') })
     v.addListener('playing', function() { console.log('playing') })
 
-    setInterval(function() {
-      v.getProperty('playingContent', function (r) {
-        console.log('playingContent', r);
-      });
-      v.getProperty('content', function (r) {
-        console.log('content', r);
-      });
-    }, 5000);
+    // setInterval(function() {
+    //   v.getProperty('playingContent', function (r) {
+    //     console.log('playingContent', r);
+    //   });
+    //   v.getProperty('content', function (r) {
+    //     console.log('content', r);
+    //   });
+    // }, 5000);
   </script>
 </body>
 </html>
