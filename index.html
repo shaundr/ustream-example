@@ -1,0 +1,36 @@
+<html>
+<head>
+  <!--script src="https://cdn.jsdelivr.net/gh/ustream/embedapi@master/dist/ustream-embedapi.min.js"></script-->
+  <script src="./ustream-embedapi.js"></script>
+</head>
+<body>
+  <iframe
+    id="UstreamFrame"
+    title="Trailhead Live Stream"
+    src="https://video.ibm.com/embed/23694806?html5ui"
+    width="100%"
+    height="100%"
+    frameborder="0"
+    allowfullscreen=""
+    webkitallowfullscreen="true"
+  ></iframe>
+
+  <script>
+    var viewer = document.getElementById('UstreamFrame')
+    var v = UstreamEmbed(viewer)
+    v.addListener('live', function() { console.log('live') })
+    v.addListener('offline', function() { console.log('offline') })
+    v.addListener('finished', function() { console.log('finished') })
+    v.addListener('playing', function() { console.log('playing') })
+
+    setInterval(function() {
+      v.getProperty('playingContent', function (r) {
+        console.log('playingContent', r);
+      });
+      v.getProperty('content', function (r) {
+        console.log('content', r);
+      });
+    }, 5000);
+  </script>
+</body>
+</html>
