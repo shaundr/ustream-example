@@ -3,30 +3,52 @@
   <!--script src="https://cdn.jsdelivr.net/gh/ustream/embedapi@master/dist/ustream-embedapi.min.js"></script-->
   <script src="./ustream-embedapi.js"></script>
 </head>
-<body>
-  <iframe
-    id="UstreamFrame"
-    title="Trailhead Live Stream"
-    src="https://video.ibm.com/embed/23694806?html5ui"
-    width="100%"
-    height="100%"
-    frameborder="0"
-    allowfullscreen=""
-    webkitallowfullscreen="true"
-  ></iframe>
+<body style="font-family: sans-serif;">
+  <div style="margin: 30px auto; max-width: 640px;">
+    <iframe
+      id="UstreamFrame"
+      title="Trailhead Live Stream"
+      src="https://video.ibm.com/embed/23694806?html5ui"
+      width="100%"
+      height="480px"
+      frameborder="0"
+      allowfullscreen=""
+      webkitallowfullscreen="true"
+    ></iframe>
+    <h1 id="status" style="text-align: center;">offline</h1>
+  </div>
 
   <script>
     var viewer = document.getElementById('UstreamFrame')
     var v = UstreamEmbed(viewer)
+    var statusDiv = document.getElementById('status')
+
+    v.addListener('offline', function () {
+      console.log('offline')
+      statusDiv.innerText = 'offline';
+    })
+
     v.addListener('live', function() {
+      console.log('live');
+      statusDiv.innerText = 'live';
+
+      // trigger play when stream comes online
       setTimeout(function() {
         v.callMethod('play');
       }, 1000)
     })
-    v.addListener('offline', function() { console.log('offline') })
-    v.addListener('finished', function() { console.log('finished') })
-    v.addListener('playing', function() { console.log('playing') })
 
+    // video events (different than stream)
+    // v.addListener('finished', function() {
+    //   console.log('finished')
+    //   statusDiv.innerText = 'finished';
+    // })
+    // v.addListener('playing', function() {
+    //   console.log('playing')
+    //   statusDiv.innerText = 'playing';
+    // })
+
+    // test player properties
     // setInterval(function() {
     //   v.getProperty('playingContent', function (r) {
     //     console.log('playingContent', r);
